@@ -36,7 +36,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 
-import { useAppwriteStore } from '@/stores/appwrite'
+import { useAppwriteStore } from '@/stores/appwriteService
 const appwrite = useAppwriteStore();
 
 if (appwrite.isLoggedIn) {
@@ -125,4 +125,4 @@ const handleJoinSisyphus = () => {
             </form>
         </CardContent>
     </Card>
-</template>
+</template>@/stores/appwriteService

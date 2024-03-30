@@ -10,8 +10,8 @@ defineProps({
 </script>
 
 <template>
-    <Avatar :size="size"> 
-        <AvatarImage :src="image" alt="Sisyphus logo"/>
+    <Avatar :size="size" style="background: transparent;"> 
+        <AvatarImage :src="image" alt="Sisyphus logo" style="background: transparent;"/>
         <AvatarFallback>Sisyphus logo</AvatarFallback>
     </Avatar>
 </template>

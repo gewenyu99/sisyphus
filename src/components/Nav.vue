@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
-import { useAppwriteStore } from '@/stores/appwrite'
+import { useAppwriteStore } from '@/stores/appwriteService
 import Logo from '../components/Logo.vue';
 const appwrite = useAppwriteStore();
 
@@ -25,7 +25,7 @@ toast({
 </script>
 
 <template>
-    <div class="grid grid-cols-2 border-b sm:mx-8 md:mx-12 lg:mx-16">
+    <div class="grid grid-cols-2 border-b mb-8 sm:mx-8 md:mx-12 lg:mx-16">
         <a href="/" class="flex items-center m-4">
             <Logo size="sm" class="mx-2" />
             <h1 class="text-2xl">Sisyphus</h1>
@@ -48,4 +48,4 @@ toast({
             </DropdownMenu>
         </div>
     </div>
-</template>
+</template>@/stores/appwriteService
