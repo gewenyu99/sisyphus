@@ -14,7 +14,7 @@ import Boulder from '@/components/Boulder.vue'
 import CreateBoulder from '@/components/CreateBoulder.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
 import router from '@/router/index'
-import { useAppwriteStore } from '@/stores/appwriteService
+import { useAppwriteStore } from '@/stores/appwriteService'
 import { PlusCircle } from 'lucide-vue-next'
 
 const appwrite = useAppwriteStore();

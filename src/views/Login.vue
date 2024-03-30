@@ -36,7 +36,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 
-import { useAppwriteStore } from '@/stores/appwriteService
+import { useAppwriteStore } from '@/stores/appwriteService'
 const appwrite = useAppwriteStore();
 
 if (appwrite.isLoggedIn) {

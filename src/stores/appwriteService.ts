@@ -1,8 +1,11 @@
-import { defineStore } from 'pinia';
-import { Client, Account, ID, Databases, type Models } from "appwrite";
+import { defineStore } from 'pinia'
+import { Client, Account, ID } from "appwrite";
 const client = new Client();
 const account = new Account(client);
-const database = new Databases(client);
+client
+  .setEndpoint(import.meta.env.VITE_PROJECT_API_ENDPOINT) // Your API Endpoint
+  .setProject(import.meta.env.VITE_PROJECT) // Your project ID
+;
 
 interface Boulder {
   name: string;
@@ -13,9 +16,8 @@ interface Boulder {
 export const useAppwriteStore = defineStore('appwrite', {
   state: () => {
     return {
-      user: null as Models.Account<Models.Preferences> | null,
-      tasks: [] as any[], // Replace 'any' with the appropriate type for tasks
-    };
+      user: null,
+    }
   },
   getters: {
     isLoggedIn: (state) => {
@@ -23,17 +25,15 @@ export const useAppwriteStore = defineStore('appwrite', {
     },
   },
   actions: {
-    async login(email: string, password: string) {
+    async login(email, password) {
       const res = await account.createEmailSession(email, password);
       this.user = await account.get();
-      // Assuming 'authState' is a property in the state object
-      this.authState = 'complete';
+      this.authState = 'complete'
     },
-    async createAccount(email: string, password: string, name: string) {
+    async createAccount(email, password, name) {
       const res = await account.create(ID.unique(), email, password, name);
-      await this.login(email, password);
-      // Assuming 'authState' is a property in the state object
-      this.authState = 'created';
+      await this.login(email, password)
+      this.authState = 'created'
     },
     async init() {
       this.user = await getUser();
@@ -51,7 +51,7 @@ export const useAppwriteStore = defineStore('appwrite', {
       );
     },
   },
-});
+})
 
 const getUser = async () => {
   try {
@@ -61,4 +61,4 @@ const getUser = async () => {
     console.log(error);
     return null;
   }
-};
+}

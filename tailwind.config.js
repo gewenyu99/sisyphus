@@ -87,9 +87,6 @@ module.exports = {
         "collapsible-down": "collapsible-down 0.2s ease-in-out",
         "collapsible-up": "collapsible-up 0.2s ease-in-out",
       },
-      gridTemplateRows: {
-        '52': 'repeat(52, minmax(0, 1fr))',
-      }
     },
   },
   plugins: [animate],

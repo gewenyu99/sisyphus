@@ -6,7 +6,7 @@ import * as z from 'zod'
 import { ChevronRight } from 'lucide-vue-next'
 import router from '../router/index'
 import Logo from '@/components/Logo.vue'
-import { useAppwriteStore } from '@/stores/appwriteService
+import { useAppwriteStore } from '@/stores/appwriteService'
 import {
     Card,
     CardContent,

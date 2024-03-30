@@ -17,9 +17,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "target": "ESNext",
-    "module": "nodenext",
-    "types": ["vite/client"]
+    "module": "nodenext"
     // ...
   }
 }

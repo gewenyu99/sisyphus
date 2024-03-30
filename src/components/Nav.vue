@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
-import { useAppwriteStore } from '@/stores/appwriteService
+import { useAppwriteStore } from '@/stores/appwriteService'
 import Logo from '../components/Logo.vue';
 const appwrite = useAppwriteStore();
 
