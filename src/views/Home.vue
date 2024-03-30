@@ -9,18 +9,18 @@ import { useAppwriteStore } from '@/stores/appwrite'
 const appwrite = useAppwriteStore();
 const { toast } = useToast()
 
-if (appwrite.isLoggedIn) {
+if (!appwrite.isLoggedIn) {
     router.push('/login');
-}
-
-toast({
+} else {
+    toast({
     title: `Welcome, ${appwrite.user.name}`,
     description: 'One must imagine Sisyphus happy.',
 })
+}
 
 </script>
 <template>
-    <div class="w-screen h-screen max-w-1000">
+    <div class="w-screen h-screen max-w-1000" v-if="appwrite.isLoggedIn">
         <Nav></Nav>
         <div class="flex flex-col items-center">
             <Boulder></Boulder>
