@@ -23,8 +23,7 @@ export function defineCollection<Type>(
     actions: {
       async load() {
         try {
-          const response = await this.list()
-          this.documents = response.documents as Type[]
+          this.documents = await this.all()
         }
         catch (error) {
           this.documents = []
@@ -60,7 +59,7 @@ export function defineCollection<Type>(
           data
         )
       },
-      async all(queries = [] as string[], batchSize = 50): Promise<Type[]> {
+      async all(queries = [] as string[], batchSize = 50) {
         let documents = [] as Type[];
         let after = null;
 

@@ -13,23 +13,27 @@ export type Boulder = Models.Document & {
 const COLLECTION = 'boulders';
 
 const collectionStore = defineCollection<Boulder>(
-  COLLECTION,
+  'collection-' + COLLECTION,
   import.meta.env.VITE_DATABASES_ID,
   COLLECTION
 )
 
 export const useBoulders = defineStore(COLLECTION, () => {
   const parent = collectionStore();
+
   const boulders = computed(() => {
     return parent.documents;
   })
+  const boulder = computed(() => (id: string) => {
+    return parent.documents.find((boulder) => boulder.$id === id);
+  });
 
   async function load() {
-    await parent.load();
+    return await parent.load();
   }
   async function add(boulder: Boulder) {
     await parent.create(boulder);
   }
 
-  return { boulders, load, add };
+  return { boulders, boulder, load, add };
 });

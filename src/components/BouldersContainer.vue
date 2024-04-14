@@ -1,16 +1,21 @@
 <script setup lang='ts'>
+import { Button } from '@/components/ui/button';
 import { useBoulders } from '@/stores/boulders';
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import CreateBoulder from '@/components/CreateBoulder.vue'
 import { PlusCircle } from 'lucide-vue-next';
 import { onBeforeMount } from 'vue';
+import Boulder from './Boulder.vue';
+import { usePushes } from '@/stores/pushes';
 
 const bouldersStore = useBoulders()
+const pushesStore = usePushes()
 const { boulders } = storeToRefs(bouldersStore)
 
 onBeforeMount(() => {
     bouldersStore.load()
+    pushesStore.load()
 })
 
 const open = ref(false)
@@ -18,8 +23,7 @@ const open = ref(false)
 
 <template>
     <div class="flex flex-col items-center sm:mx-8 md:mx-12 lg:mx-16">
-        <Boulder v-for="boulder in boulders" :key="boulder.id" :boulderId="boulder.id">
-        </Boulder>
+        <Boulder v-for="boulder in boulders" :boulderId="boulder.$id"/>
         <Card class="max-w-[74.5rem] w-full inline-block p-2 h-48 
                 flex justify-center items-stretch text-slate-400 
                 border border-dashed border-x-0
