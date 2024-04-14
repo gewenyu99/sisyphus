@@ -1,12 +1,10 @@
 <script setup lang='ts'>
-import { h } from 'vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import { ChevronRight } from 'lucide-vue-next'
 import router from '../router/index'
 import Logo from '@/components/Logo.vue'
-import { useAppwriteStore } from '@/stores/appwriteService'
 import {
     Card,
     CardContent,
@@ -15,33 +13,19 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
 import {
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from '@/components/ui/form'
-
-const appwrite = useAppwriteStore();
-
-if (appwrite.isLoggedIn) {
-    router.push('/');
-}
+import { useAuthStore } from '@/stores/auth'
+import type { AppwriteException } from 'appwrite'
 
 const formSchema = toTypedSchema(z.object({
     nickname: z.string().min(2).max(50),
@@ -53,36 +37,16 @@ const { handleSubmit } = useForm({
     validationSchema: formSchema,
 })
 
-const onSubmit = handleSubmit(async (values) => {
+const auth = useAuthStore()
+const onSubmit = handleSubmit(async ({ nickname, email, password }) => {
     try {
-        await appwrite.createAccount(values.email, values.password, values.nickname);
-        router.push('/');
+        await auth.register(email, password, nickname)
+        router.push('/')
     } catch (error) {
-        if (error.type === 'user_already_exists') {
+        if ((error as AppwriteException).type === 'user_already_exists') {
             toast({
                 title: 'Something went wrong',
                 description: 'A user with the same id, email, or phone already exists in this project.',
-            });
-        } else if (error.type === 'user_email_already_exists') {
-            toast({
-                title: 'Something went wrong',
-                description: 'A user with the same email already exists in the current project.',
-            });
-        }
-        else if (error.type === 'user_password_mismatch') {
-            toast({
-                title: 'user_invalid_credentials',
-                description: 'The email and password provided are not valid.',
-            });
-        } else if (error.type === 'password_recently_used') {
-            toast({
-                title: 'Something went wrong',
-                description: 'The password you are trying to use is similar to your previous password. For your security, please choose a different password and try again.',
-            });
-        } else if (error.type === 'password_personal_data') {
-            toast({
-                title: 'Something went wrong',
-                description: 'The password you are trying to use contains references to your name, email, phone or userID. For your security, please choose a different password and try again.',
             });
         } else {
             toast({
@@ -92,9 +56,11 @@ const onSubmit = handleSubmit(async (values) => {
         }
     }
 })
+
 const handleLogin = () => {
     router.push('/login')
 }
+
 const usernameDefault = 'Sisyphys-' + Math.random().toString(16).substr(2, 4);
 </script>
 
@@ -147,4 +113,4 @@ const usernameDefault = 'Sisyphys-' + Math.random().toString(16).substr(2, 4);
             </form>
         </CardContent>
     </Card>
-</template>@/stores/appwriteService
+</template>

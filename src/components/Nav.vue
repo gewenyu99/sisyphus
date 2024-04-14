@@ -6,21 +6,29 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+
 import { ChevronDown } from 'lucide-vue-next'
 
 import { Button } from '@/components/ui/button'
 
+import { Skeleton } from '@/components/ui/skeleton'
+
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const { toast } = useToast()
-import { useAppwriteStore } from '@/stores/appwriteService'
 import Logo from '../components/Logo.vue';
-const appwrite = useAppwriteStore();
+import { useAuthStore } from '@/stores/auth';
+import router from '@/router'
+const auth = useAuthStore();
 
-toast({
-    title: `Welcome, ${appwrite.user.name}`,
-    description: 'One must imagine Sisyphus happy.',
-})
+const logout = async () => {
+    await auth.logout();
+    router.push('/login');
+    toast({
+        title: 'Goodbye',
+        description: 'Hope to see you soon.',
+    })
+}
 
 </script>
 
@@ -31,21 +39,24 @@ toast({
             <h1 class="text-2xl">Sisyphus</h1>
         </a>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end" v-if="auth.user">
             <DropdownMenu class="m-4 w-56">
                 <DropdownMenuTrigger as-child class="m-4">
                     <Button variant="link" class="text-l w-56 p-0 flex justify-start">
                         <ChevronDown class="w-4 h-4 mx-2" />
-                        <p class="text-ellipsis overflow-hidden">Welcome, {{ appwrite.user.name }}</p>
+                        <p class="text-ellipsis overflow-hidden">Welcome, {{ auth.user.name }}</p>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent class="w-56">
-                    <DropdownMenuItem>
+                    <DropdownMenuItem @click="logout">
                         <span>Logout</span>
                         <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
+        <div class="flex justify-end" v-else>
+            <Skeleton class="m-4 w-56" />
+        </div>
     </div>
-</template>@/stores/appwriteService
+</template>

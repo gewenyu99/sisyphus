@@ -17,7 +17,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "module": "nodenext"
+    "module": "nodenext",
+    "types": ["node", "vite/client"]
     // ...
   }
 }

@@ -24,13 +24,7 @@ import {
     FormItem,
     FormLabel,
 } from '@/components/ui/form'
-
-import { useAppwriteStore } from '@/stores/appwriteService'
-const appwrite = useAppwriteStore();
-
-if (appwrite.isLoggedIn) {
-    router.push('/');
-}
+import { useAuthStore } from '@/stores/auth'
 
 const formSchema = toTypedSchema(z.object({
     email: z.string().email(),
@@ -40,38 +34,22 @@ const formSchema = toTypedSchema(z.object({
 const { handleSubmit } = useForm({
     validationSchema: formSchema,
 })
+const auth = useAuthStore();
 
-const onSubmit = handleSubmit(async (values) => {
+const onSubmit = handleSubmit(async ({ email, password }) => {
     try {
-        await appwrite.login(values.email, values.password);
-        router.push('/');
+        await auth.login(email, password)
+        router.push('/')
     } catch (error) {
-        if (error.type === 'user_password_mismatch') {
-            toast({
-                title: 'user_invalid_credentials',
-                description: 'The email and password provided are not valid.',
-            });
-        } else if (error.type === 'password_recently_used') {
-            toast({
-                title: 'Something went wrong',
-                description: 'The password you are trying to use is similar to your previous password. For your security, please choose a different password and try again.',
-            });
-        } else if (error.type === 'password_personal_data') {
-            toast({
-                title: 'Something went wrong',
-                description: 'The password you are trying to use contains references to your name, email, phone or userID. For your security, please choose a different password and try again.',
-            });
-        } else {
-            toast({
-                title: 'Something went wrong',
-                description: 'An error occurred while creating the account.',
-            });
-        }
+        toast({
+            title: 'Something went wrong',
+            description: 'Please check your email and password and try again.',
+        })
     }
 })
 
 const handleJoinSisyphus = () => {
-    router.push('/create')
+    router.push('/register')
 }
 </script>
 
@@ -114,4 +92,4 @@ const handleJoinSisyphus = () => {
             </form>
         </CardContent>
     </Card>
-</template>@/stores/appwriteService
+</template>

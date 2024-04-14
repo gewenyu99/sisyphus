@@ -17,17 +17,22 @@ import {
     FormDescription,
 } from '@/components/ui/form'
 import { useForm } from 'vee-validate'
-
 import { useToast } from '@/components/ui/toast/use-toast'
+import { Input } from '@/components/ui/input'
+import { useBoulders } from '@/stores/boulders'
 
-import { useAppwriteStore } from '@/stores/appwriteService'
-const appwrite = useAppwriteStore();
 
 const { toast } = useToast()
 
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
+import type { Boulder } from '@/stores/boulders'
 
+// setup store
+const { boulders, add } = useBoulders();
+
+
+// form handling
 const formSchema = toTypedSchema(z.object({
     name: z.string().min(3).max(20),
     description: z.string().min(3).max(200),
@@ -40,9 +45,14 @@ const { handleSubmit } = useForm({
 const emit = defineEmits(['update:open']);
 const props = defineProps(['open']);
 
+// form submission
 const onSubmit = handleSubmit(async (values) => {
     try {
-        await appwrite.createBoulder(values.name, values.description, values.distance);
+        await add({
+            name: values.name, 
+            description: values.description, 
+            distance: values.distance
+        } as Boulder);
         toast({
             title: 'A boulder to push',
             description: `${values.name}, a new goal to conquer.`,
@@ -55,9 +65,6 @@ const onSubmit = handleSubmit(async (values) => {
         });
     }
 })
-
-import { Input } from '@/components/ui/input'
-
 </script>
 
 <template>
