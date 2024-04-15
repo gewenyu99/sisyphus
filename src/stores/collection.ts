@@ -18,12 +18,14 @@ export function defineCollection<Type>(
       }
     },
     getters: {
-
+      count(state) {
+        return state.documents.length
+      }
     },
     actions: {
-      async load() {
+      async load(queries = [], batchSize = 50) {
         try {
-          this.documents = await this.all()
+          this.documents = await this.all(queries, batchSize)
         }
         catch (error) {
           this.documents = []

@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { Button } from '@/components/ui/button';
-import { useBoulders } from '@/stores/boulders';
+import { useBoulders, type Boulder as BoulderType } from '@/stores/boulders';
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import CreateBoulder from '@/components/CreateBoulder.vue'

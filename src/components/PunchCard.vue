@@ -39,7 +39,6 @@ const getDay = computed(() => (day: string | Date | Dayjs) => {
                 </template>
             </div>
         </div>
-        {{ console.log(pushes(boulderId)) }}
         <div class="overflow-scroll flex flex-row-reverse m-0">
             <div class="grid-container gap-1 text-xs p-0">
                 <template v-for="(week, index) in 52" :key="week">

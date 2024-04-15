@@ -14,9 +14,10 @@ import { Button } from '@/components/ui/button';
 import { Separator } from './ui/separator';
 import LogoTransparent from './LogoTransparent.vue';
 import CreatePush from './CreatePush.vue';
-import { defineProps, reactive, ref, watch } from 'vue';
+import { defineProps, onMounted, reactive, ref, watch } from 'vue';
 import { useBoulders } from '@/stores/boulders';
 import PunchCard from './PunchCard.vue';
+import { on } from 'events';
 
 
 const props = defineProps({

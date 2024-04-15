@@ -30,7 +30,7 @@ export const usePushes = defineStore(COLLECTION, () => {
   });
 
   async function load() {
-    await parent.load();
+    await parent.load([], 500);
   }
   async function push(distance: number, boulderId: number) {
     await parent.create({
@@ -43,5 +43,3 @@ export const usePushes = defineStore(COLLECTION, () => {
 
   return { pushes, load, push };
 });
-
-
