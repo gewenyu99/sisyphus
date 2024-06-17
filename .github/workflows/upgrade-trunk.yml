@@ -17,3 +17,5 @@ jobs:
       # >>> Install your own deps here (npm install, etc) <<<
       - name: Trunk Upgrade
         uses: trunk-io/trunk-action/upgrade@v1
+        with:
+          prefix: Automated upgrade
