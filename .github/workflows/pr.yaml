@@ -1,0 +1,16 @@
+name: pr-lint
+on:
+  pull_request:
+    types: ['opened', 'edited', 'reopened', 'synchronize']
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install Trunk
+      run: curl https://get.trunk.io -fsSL | bash
+
+    - name: Run Check
+      run: trunk check --ci
