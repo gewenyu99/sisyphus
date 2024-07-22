@@ -35,5 +35,9 @@ export const useBoulders = defineStore(COLLECTION, () => {
     await parent.create(boulder);
   }
 
+  async function  clear( ) {
+    let res=  await parent.deleteAll() ;
+    return  res   
+  }
   return { boulders, boulder, load, add };
 });
