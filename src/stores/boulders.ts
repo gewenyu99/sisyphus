@@ -1,5 +1,6 @@
 import { type Models } from '@/lib/appwrite'
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia"
+
 import { defineCollection } from './collection';
 import { ref } from 'vue';
 import { computed } from 'vue';
