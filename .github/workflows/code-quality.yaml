@@ -24,7 +24,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Get Branch Name
+        run: |
+          branchname=$(git rev-parse --abbrev-ref HEAD)
+          echo "branchname=$branchname" >> "$GITHUB_ENV"
       - name: Super-linter
         uses: super-linter/super-linter@v7.2.1 # x-release-please-version
         env:
