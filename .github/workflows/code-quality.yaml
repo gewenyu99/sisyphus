@@ -2,9 +2,6 @@ name: Code Quality
 
 on:
   push:
-    branches:
-      - main
-      - develop
   pull_request:
 
 # cancel in-progress runs on new commits to same PR (gitub.event.number)
@@ -17,18 +14,18 @@ permissions:
 
 jobs:
   Lint:
-    name: Trunk Check Annotate
+    name: Try-superlinter
     runs-on: ubuntu-latest
     permissions:
       checks: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Trunk Check
-        uses: trunk-io/trunk-action@v1
-        # with:
-          # post-annotations: true # only for fork PRs
-
+      - name: Super-linter
+      uses: super-linter/super-linter@v7.2.1 # x-release-please-version
+      env:
+        # To report GitHub Actions status checks
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   
