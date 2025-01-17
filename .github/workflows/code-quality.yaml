@@ -24,10 +24,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Get Branch Name
-        run: |
-          branchname=$(git rev-parse --abbrev-ref HEAD)
-          echo "branchname=$branchname" >> "$GITHUB_ENV"
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
       - name: Super-linter
         uses: super-linter/super-linter@v7.2.1 # x-release-please-version
         env:
