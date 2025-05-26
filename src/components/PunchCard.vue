@@ -27,6 +27,10 @@ const getDay = computed(() => (day: string | Date | Dayjs) => {
     return pushes.value(props.boulderId).find(d => compareDays(d.date, day)) ?? { distance: 0 }
 })
 
+const getOpacity = computed(() => (day: string | Date | Dayjs) => {
+    return Math.min(1, getDay.value(day).distance / props.target)
+})
+
 </script>
 <template>
     <div class="flex">
@@ -54,10 +58,16 @@ const getDay = computed(() => (day: string | Date | Dayjs) => {
                         </div>
                     </template>
 
-                    <div v-for="(day, dayIndex) in getWeek(week - 52)" :key="day.date"
-                        :class="['w-4', 'h-4', 'border-[2px]', 'rounded-sm', 'border-transparent', { 'bg-[#C6E4B6]': getDay(day).distance > 0 }]"
-                        :style="{ opacity: getDay(day).distance / target, gridColumnStart: index + 1, gridRowStart: dayIndex + 3 }">
-                    </div>
+                    <template v-for="(day, dayIndex) in getWeek(week - 52)" :key="day.date">
+                        <div v-if="getOpacity(day) > 0"
+                            :class="['w-4', 'h-4', 'border-[1px]', 'border-transparent', 'rounded-sm', { 'bg-[#C6E4B6]': getDay(day).distance > 0 }]"
+                            :style="{ opacity: getOpacity(day), gridColumnStart: index + 1, gridRowStart: dayIndex + 3 }">
+                        </div>
+                        <div v-else
+                            :class="['w-4', 'h-4', 'border-[1px]', 'border-dotted', 'border-gray-300', 'rounded-sm', 'bg-gray-50']"
+                            :style="{ gridColumnStart: index + 1, gridRowStart: dayIndex + 3 }">
+                        </div>
+                    </template>
                 </template>
             </div>
         </div>
