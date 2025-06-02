@@ -1,5 +1,6 @@
 import { type Models } from '@/lib/appwrite'
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia"
+
 import { defineCollection } from './collection';
 import { ref } from 'vue';
 import { computed } from 'vue';
@@ -35,5 +36,9 @@ export const useBoulders = defineStore(COLLECTION, () => {
     await parent.create(boulder);
   }
 
+  async function  clear( ) {
+    let res=  await parent.deleteAll() ;
+    return  res   
+  }
   return { boulders, boulder, load, add };
 });
